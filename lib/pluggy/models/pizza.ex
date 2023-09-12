@@ -1,7 +1,7 @@
 defmodule Pluggy.Pizza do
   defstruct(id: nil, name: "", tastiness: "")
 
-  alias Pluggy.Fruit
+  alias Pluggy.Pruit
 
   def all do
     Postgrex.query!(DB, "SELECT * FROM fruits", [], pool: DBConnection.ConnectionPool).rows
