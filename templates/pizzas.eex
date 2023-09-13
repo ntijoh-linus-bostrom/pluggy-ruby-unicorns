@@ -1,0 +1,8 @@
+<ul>
+  <%= for pizza <- pizzas do %>
+    <li>
+        <%= pizza.id %> - <%= pizza.name %> - <%= pizza.ingredients %> - <%= pizza.img %>
+        <p> Grillkorv! </p>
+	</li>
+  <% end %>
+</ul>

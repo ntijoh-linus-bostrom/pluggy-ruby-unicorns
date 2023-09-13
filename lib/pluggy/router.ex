@@ -41,6 +41,7 @@ defmodule Pluggy.Router do
   # post("/fruits/:id/destroy", do: FruitController.destroy(conn, id))
 
   get("/ingredients", do: PizzaController.ingredients(conn))
+  get("/pizzas", do: PizzaController.pizzas(conn))
 
   post("/users/login", do: UserController.login(conn, conn.body_params))
   post("/users/logout", do: UserController.logout(conn))

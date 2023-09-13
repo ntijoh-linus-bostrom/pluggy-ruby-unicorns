@@ -1,12 +1,12 @@
 defmodule Pluggy.Pizza do
-  defstruct(id: nil, name: "", tastiness: "")
+  defstruct(id: nil, name: "", ingredients: nil, image: "")
 
   alias Pluggy.Pizza
 
-  # def all do
-  #   Postgrex.query!(DB, "SELECT * FROM fruits", [], pool: DBConnection.ConnectionPool).rows
-  #   |> to_struct_list
-  # end
+  def all do
+    Postgrex.query!(DB, "SELECT * FROM pizza", [], pool: DBConnection.ConnectionPool).rows
+    |> to_struct_list
+  end
 
   # def get(id) do
   #   Postgrex.query!(DB, "SELECT * FROM fruits WHERE id = $1 LIMIT 1", [String.to_integer(id)],
@@ -43,11 +43,11 @@ defmodule Pluggy.Pizza do
   #   )
   # end
 
-  # def to_struct([[id, name, tastiness]]) do
-  #   %Fruit{id: id, name: name, tastiness: tastiness}
-  # end
+  def to_struct([[id, name, ingredients, image]]) do
+    %Pizza{id: id, name: name, ingredients: ingredients, image: image}
+  end
 
-  # def to_struct_list(rows) do
-  #   for [id, name, tastiness] <- rows, do: %Fruit{id: id, name: name, tastiness: tastiness}
-  # end
+  def to_struct_list(rows) do
+    for [id, name, ingredients, image] <- rows, do: %Pizza{id: id, name: name, ingredients: ingredients, image: image}
+  end
 end

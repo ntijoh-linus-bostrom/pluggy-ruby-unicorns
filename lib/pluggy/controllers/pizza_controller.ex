@@ -45,7 +45,9 @@ defmodule Pluggy.PizzaController do
   #   redirect(conn, "/fruits")
   # end
 
-  def ingredients(conn), do: send_resp(conn, 200, render("Ingredients", ingredients: Ingredients.all()))
+  def ingredients(conn), do: send_resp(conn, 200, render("ingredients", ingredients: Ingredients.all()))
+
+  def pizzas(conn), do: send_resp(conn, 200, render("pizzas", pizzas: Pizza.all()))
 
   defp redirect(conn, url) do
     Plug.Conn.put_resp_header(conn, "location", url) |> send_resp(303, "")
