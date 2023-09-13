@@ -50,4 +50,10 @@ defmodule Pluggy.Ingredients do
   def to_struct_list(rows) do
     for [id, name] <- rows, do: %Ingredients{id: id, name: name}
   end
+
+  def get(num) do
+    Integer.digits(num, 2)
+    Postgrex.query!(DB, "SELECT * FROM ingredients ORDER BY id", [], pool: DBConnection.ConnectionPool).rows
+
+  end
 end
