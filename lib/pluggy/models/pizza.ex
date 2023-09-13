@@ -1,10 +1,10 @@
 defmodule Pluggy.Pizza do
-  defstruct(id: nil, name: "", ingredients: nil, image: "")
+  defstruct(id: nil, name: "", ingredients: 0, image: "")
 
   alias Pluggy.Pizza
 
   def all do
-    Postgrex.query!(DB, "SELECT * FROM pizza", [], pool: DBConnection.ConnectionPool).rows
+    Postgrex.query!(DB, "SELECT * FROM pizzas", [], pool: DBConnection.ConnectionPool).rows
     |> to_struct_list
   end
 
