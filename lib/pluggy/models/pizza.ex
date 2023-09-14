@@ -2,6 +2,7 @@ defmodule Pluggy.Pizza do
   defstruct(id: nil, name: "", ingredients: 0, image: "")
 
   alias Pluggy.Pizza
+  alias Pluggy.Ingredients
 
   def all do
     Postgrex.query!(DB, "SELECT * FROM pizzas", [], pool: DBConnection.ConnectionPool).rows
@@ -43,11 +44,22 @@ defmodule Pluggy.Pizza do
   #   )
   # end
 
-  def to_struct([[id, name, ingredients, image]]) do
-    %Pizza{id: id, name: name, ingredients: ingredients, image: image}
+  # defp to_struct([[id, name, ingredients, image]]) do
+  #   %Pizza{id: id, name: name, ingredients: ingredients, image: image}
+  # end
+
+  defp to_struct_list(rows) do
+    for [id, name, ingredients, image] <- rows, do: %Pizza{id: id, name: name, ingredients: list_ingredients(ingredients), image: image}
   end
 
-  def to_struct_list(rows) do
-    for [id, name, ingredients, image] <- rows, do: %Pizza{id: id, name: name, ingredients: ingredients, image: image}
+  defp list_ingredients(num) do
+    Integer.digits(num, 2)
+    |> Enum.reverse()
+    |> Enum.with_index(1)
+    |> Enum.reduce([], (fn {binary, index}, output -> if binary == 1, do: [index | output], else: output end))
+    |> Enum.reduce([], fn index, output -> [Ingredients.get(index) | output] end)
+    |> Enum.reduce([], fn %Ingredients{id: _id, name: name}, output -> [name | output] end)
+    |> Enum.reverse()
   end
+
 end

@@ -8,12 +8,10 @@ defmodule Pluggy.Ingredients do
     |> to_struct_list
   end
 
-  # def get(id) do
-  #   Postgrex.query!(DB, "SELECT * FROM fruits WHERE id = $1 LIMIT 1", [String.to_integer(id)],
-  #     pool: DBConnection.ConnectionPool
-  #   ).rows
-  #   |> to_struct
-  # end
+  def get(id) do
+    Postgrex.query!(DB, "SELECT * FROM ingredients WHERE id = $1 LIMIT 1", [id], pool: DBConnection.ConnectionPool).rows
+    |> to_struct
+  end
 
   # def update(id, params) do
   #   name = params["name"]

@@ -1,10 +1,14 @@
 <ul>
   <%= for pizza <- pizzas do %>
     <li>
-      <h2><%= pizza.name %></h2>
-      <%= for ingredient <- Ingredients.get(pizza.ingredients) do %> 
-        <p><%= ingredient %></p>
-      <% end %>
+      <%= pizza.id %> - <%= pizza.name %>
+      <ul>
+        <%= for ingredient <- pizza.ingredients do %>
+        <li>
+          <%= ingredient %>
+        </li>
+        <% end %>
+      </ul>
       <%= pizza.image %>
 	  </li>
   <% end %>
