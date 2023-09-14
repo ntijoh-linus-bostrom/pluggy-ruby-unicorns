@@ -1,11 +1,11 @@
-defmodule Pluggy.Pizza do
-  defstruct(id: nil, name: "", ingredients: 0, image: "")
+defmodule Pluggy.Order do
+  defstruct(id: nil, name: "", ingredients: 0, done: nil, paid_for: nil, picked_up: nil)
 
-  alias Pluggy.Pizza
+  alias Pluggy.Order
   alias Pluggy.Ingredient
 
   def all do
-    Postgrex.query!(DB, "SELECT * FROM pizzas", [], pool: DBConnection.ConnectionPool).rows
+    Postgrex.query!(DB, "SELECT * FROM orders", [], pool: DBConnection.ConnectionPool).rows
     |> to_struct_list
   end
 
@@ -44,12 +44,13 @@ defmodule Pluggy.Pizza do
   #   )
   # end
 
-  # defp to_struct([[id, name, ingredients, image]]) do
-  #   %Pizza{id: id, name: name, ingredients: ingredients, image: image}
+  # @spec to_struct([[...], ...]) :: %Pluggy.Fruit{id: any, name: any, tastiness: any}
+  # def to_struct([[id, name, tastiness]]) do
+  #   %Fruit{id: id, name: name, tastiness: tastiness}
   # end
 
   defp to_struct_list(rows) do
-    for [id, name, ingredients, image] <- rows, do: %Pizza{id: id, name: name, ingredients: Ingredient.list_ingredients(ingredients), image: image}
+    for [id, name, ingredients, done, paid_for, picked_up] <- rows, do: %Order{id: id, name: name, ingredients: Ingredient.list_ingredients(ingredients), done: done, paid_for: paid_for, picked_up: picked_up}
   end
 
 

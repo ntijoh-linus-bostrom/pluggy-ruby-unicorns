@@ -2,6 +2,6 @@
   <%= for ingredient <- ingredients do %>
     <li>
         <%= ingredient.id %> - <%= ingredient.name %>
-	</li>
+	  </li>
   <% end %>
 </ul>

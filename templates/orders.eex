@@ -1,0 +1,31 @@
+<ul>
+  <%= for order <- orders do %>
+    <li>
+        <%= order.id %> - <%= order.name %>
+
+        <p> Ingredients: </p>
+        <ul>
+            <%= for ingredient <- order.ingredients do %>
+                <li>
+                    <%= ingredient %>
+                </li>
+            <% end %>
+        </ul>
+
+        <p> Status: </p>
+        <ul>
+            <li>
+                Done?: <%= order.done %>
+            </li>
+            <li>
+                Paid for?: <%= order.paid_for %>
+            </li>
+            <li>
+                Picked up?: <%= order.picked_up %>
+            </li>
+        </ul>
+
+    </li>
+  <% end %>
+</ul>
+

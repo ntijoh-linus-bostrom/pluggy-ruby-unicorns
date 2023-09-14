@@ -4,12 +4,12 @@
       <%= pizza.id %> - <%= pizza.name %>
       <ul>
         <%= for ingredient <- pizza.ingredients do %>
-        <li>
-          <%= ingredient %>
-        </li>
+          <li>
+            <%= ingredient %>
+          </li>
         <% end %>
       </ul>
-      <%= pizza.image %>
+      <img src="/img/<%=pizza.image%>" alt="Image of <%=pizza.name%>" width="200" height="200">
 	  </li>
   <% end %>
 </ul>

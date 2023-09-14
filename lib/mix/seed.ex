@@ -15,6 +15,7 @@ defmodule Mix.Tasks.Seed do
     Postgrex.query!(DB, "DROP TABLE IF EXISTS users", [], pool: DBConnection.ConnectionPool)
     Postgrex.query!(DB, "DROP TABLE IF EXISTS pizzas", [], pool: DBConnection.ConnectionPool)
     Postgrex.query!(DB, "DROP TABLE IF EXISTS ingredients", [], pool: DBConnection.ConnectionPool)
+    Postgrex.query!(DB, "DROP TABLE IF EXISTS orders", [], pool: DBConnection.ConnectionPool)
   end
 
   defp create_tables() do
@@ -22,6 +23,7 @@ defmodule Mix.Tasks.Seed do
     #Postgrex.query!(DB, "Create TABLE fruits (id SERIAL, name VARCHAR(255) NOT NULL, tastiness INTEGER NOT NULL)", [], pool: DBConnection.ConnectionPool)
     Postgrex.query!(DB, "CREATE TABLE pizzas (id SERIAL, name VARCHAR(255) NOT NULL, ingredients INTEGER NOT NULL, image VARCHAR(255) NOT NULL)", [], pool: DBConnection.ConnectionPool)
     Postgrex.query!(DB, "CREATE TABLE ingredients (id SERIAL, name VARCHAR(255) NOT NULL)", [], pool: DBConnection.ConnectionPool)
+    Postgrex.query!(DB, "CREATE TABLE orders (id SERIAL, name VARCHAR(255) NOT NULL, ingredients INTEGER NOT NULL, done BOOLEAN NOT NULL, paid_for BOOLEAN NOT NULL, picked_up BOOLEAN NOT NULL)", [], pool: DBConnection.ConnectionPool)
   end
 
   defp seed_data() do
@@ -47,13 +49,14 @@ defmodule Mix.Tasks.Seed do
     Postgrex.query!(DB, "INSERT INTO ingredients(name) VALUES($1)", ["Chilli"], pool: DBConnection.ConnectionPool)
     Postgrex.query!(DB, "INSERT INTO ingredients(name) VALUES($1)", ["Basil"], pool: DBConnection.ConnectionPool)
     Postgrex.query!(DB, "INSERT INTO pizzas(name, ingredients, image) VALUES($1, $2, $3)", ["Marinara", 4, "marinara.svg"], pool: DBConnection.ConnectionPool)
-    Postgrex.query!(DB, "INSERT INTO pizzas(name, ingredients, image) VALUES($1, $2, $3)", ["Margherita", 65548, "margherita.svg"], pool: DBConnection.ConnectionPool)
-    Postgrex.query!(DB, "INSERT INTO pizzas(name, ingredients, image) VALUES($1, $2, $3)", ["Prosciuttio e funghi", 16524, "prosciuttio-e-funghi.svg"], pool: DBConnection.ConnectionPool)
-    Postgrex.query!(DB, "INSERT INTO pizzas(name, ingredients, image) VALUES($1, $2, $3)", ["Quattro stagioni", 25228, "quattro-stagioni.svg"], pool: DBConnection.ConnectionPool)
-    Postgrex.query!(DB, "INSERT INTO pizzas(name, ingredients, image) VALUES($1, $2, $3)", ["Capricciosa", 24716, "capricciosa.svg"], pool: DBConnection.ConnectionPool)
-    Postgrex.query!(DB, "INSERT INTO pizzas(name, ingredients, image) VALUES($1, $2, $3)", ["Ortolana", 7180, "ortolana.svg"], pool: DBConnection.ConnectionPool)
     Postgrex.query!(DB, "INSERT INTO pizzas(name, ingredients, image) VALUES($1, $2, $3)", ["Quattro formaggi", 124, "quattro-formaggi.svg"], pool: DBConnection.ConnectionPool)
+    Postgrex.query!(DB, "INSERT INTO pizzas(name, ingredients, image) VALUES($1, $2, $3)", ["Margherita", 65548, "margherita.svg"], pool: DBConnection.ConnectionPool)
+    Postgrex.query!(DB, "INSERT INTO pizzas(name, ingredients, image) VALUES($1, $2, $3)", ["Prosciutto e funghi", 16524, "prosciutto-e-funghi.svg"], pool: DBConnection.ConnectionPool)
+    Postgrex.query!(DB, "INSERT INTO pizzas(name, ingredients, image) VALUES($1, $2, $3)", ["Capricciosa", 24716, "capricciosa.svg"], pool: DBConnection.ConnectionPool)
+    Postgrex.query!(DB, "INSERT INTO pizzas(name, ingredients, image) VALUES($1, $2, $3)", ["Quattro stagioni", 25228, "quattro-stagioni.svg"], pool: DBConnection.ConnectionPool)
     Postgrex.query!(DB, "INSERT INTO pizzas(name, ingredients, image) VALUES($1, $2, $3)", ["Diavola", 34060, "diavola.svg"], pool: DBConnection.ConnectionPool)
+    Postgrex.query!(DB, "INSERT INTO pizzas(name, ingredients, image) VALUES($1, $2, $3)", ["Ortolana", 7180, "ortolana.svg"], pool: DBConnection.ConnectionPool)
+    Postgrex.query!(DB, "INSERT INTO orders(name, ingredients, done, paid_for, picked_up) VALUES($1, $2, $3, $4, $5)", ["Marinara", 4, false, false, false], pool: DBConnection.ConnectionPool)
   end
 
 end

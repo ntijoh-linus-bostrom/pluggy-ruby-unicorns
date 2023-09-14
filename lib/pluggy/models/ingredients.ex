@@ -1,7 +1,7 @@
-defmodule Pluggy.Ingredients do
+defmodule Pluggy.Ingredient do
   defstruct(id: nil, name: "")
 
-  alias Pluggy.Ingredients
+  alias Pluggy.Ingredient
 
   def all do
     Postgrex.query!(DB, "SELECT * FROM ingredients", [], pool: DBConnection.ConnectionPool).rows
@@ -42,11 +42,21 @@ defmodule Pluggy.Ingredients do
   # end
 
   def to_struct([[id, name]]) do
-    %Ingredients{id: id, name: name}
+    %Ingredient{id: id, name: name}
   end
 
   def to_struct_list(rows) do
-    for [id, name] <- rows, do: %Ingredients{id: id, name: name}
+    for [id, name] <- rows, do: %Ingredient{id: id, name: name}
+  end
+
+  def list_ingredients(num) do
+    Integer.digits(num, 2)
+    |> Enum.reverse()
+    |> Enum.with_index(1)
+    |> Enum.reduce([], (fn {binary, index}, output -> if binary == 1, do: [index | output], else: output end))
+    |> Enum.reduce([], fn index, output -> [Ingredient.get(index) | output] end)
+    |> Enum.reduce([], fn %Ingredient{id: _id, name: name}, output -> [name | output] end)
+    |> Enum.reverse()
   end
 
   def get(num) do

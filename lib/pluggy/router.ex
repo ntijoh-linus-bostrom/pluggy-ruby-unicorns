@@ -39,12 +39,14 @@ defmodule Pluggy.Router do
 
   get("/ingredients", do: PizzaController.ingredients(conn))
   get("/pizzas", do: PizzaController.pizzas(conn))
+  get("/orders", do: PizzaController.order(conn))
+
 
   post("/users/login", do: UserController.login(conn, conn.body_params))
   post("/users/logout", do: UserController.logout(conn))
 
   match _ do
-    send_resp(conn, 404, "oops")
+    send_resp(conn, 404, "Error: 404. Route not found.")
   end
 
   defp put_secret_key_base(conn, _) do

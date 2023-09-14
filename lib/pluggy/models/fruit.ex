@@ -43,6 +43,7 @@ defmodule Pluggy.Fruit do
     )
   end
 
+  @spec to_struct([[...], ...]) :: %Pluggy.Fruit{id: any, name: any, tastiness: any}
   def to_struct([[id, name, tastiness]]) do
     %Fruit{id: id, name: name, tastiness: tastiness}
   end

@@ -2,7 +2,8 @@ defmodule Pluggy.PizzaController do
   require IEx
 
   alias Pluggy.Pizza
-  alias Pluggy.Ingredients
+  alias Pluggy.Ingredient
+  alias Pluggy.Order
   alias Pluggy.User
   import Pluggy.Template, only: [render: 2]
   import Plug.Conn, only: [send_resp: 3]
@@ -17,7 +18,7 @@ defmodule Pluggy.PizzaController do
         _ -> User.get(session_user)
       end
 
-    send_resp(conn, 200, render("fruits/index", ingredients: Ingredients.all(), user: current_user))
+    send_resp(conn, 200, render("fruits/index", ingredients: Ingredient.all(), user: current_user))
   end
 
   # #render använder eex
@@ -45,11 +46,11 @@ defmodule Pluggy.PizzaController do
   #   redirect(conn, "/fruits")
   # end
 
-  def ingredients(conn), do: send_resp(conn, 200, render("ingredients", ingredients: Ingredients.all()))
+  def ingredients(conn), do: send_resp(conn, 200, render("ingredients", ingredients: Ingredient.all()))
 
-  def pizzas(conn) do
-    send_resp(conn, 200, render("pizzas", pizzas: Pizza.all()))
-  end
+  def pizzas(conn), do: send_resp(conn, 200, render("pizzas", pizzas: Pizza.all()))
+
+  def order(conn), do: send_resp(conn, 200, render("orders", orders: Order.all()))
 
   # defp redirect(conn, url) do
   #   Plug.Conn.put_resp_header(conn, "location", url) |> send_resp(303, "")
