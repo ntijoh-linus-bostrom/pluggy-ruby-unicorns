@@ -42,6 +42,10 @@ defmodule Pluggy.Router do
   get("/orders", do: PizzaController.order(conn))
 
 
+
+  post("add_order", do: PizzaController.add_order(conn, conn.body_params))
+
+
   post("/users/login", do: UserController.login(conn, conn.body_params))
   post("/users/logout", do: UserController.logout(conn))
 

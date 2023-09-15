@@ -18,7 +18,7 @@ defmodule Pluggy.PizzaController do
         _ -> User.get(session_user)
       end
 
-    send_resp(conn, 200, render("fruits/index", ingredients: Ingredient.all(), user: current_user))
+    send_resp(conn, 200, render("pizzas/pizzas", ingredients: Ingredient.all(), user: current_user))
   end
 
   # #render använder eex
@@ -46,11 +46,14 @@ defmodule Pluggy.PizzaController do
   #   redirect(conn, "/fruits")
   # end
 
-  def ingredients(conn), do: send_resp(conn, 200, render("ingredients", ingredients: Ingredient.all()))
+  def ingredients(conn), do: send_resp(conn, 200, render("pizzas/ingredients", ingredients: Ingredient.all()))
 
-  def pizzas(conn), do: send_resp(conn, 200, render("pizzas", pizzas: Pizza.all()))
+  def pizzas(conn), do: send_resp(conn, 200, render("pizzas/pizzas", pizzas: Pizza.all()))
 
-  def order(conn), do: send_resp(conn, 200, render("orders", orders: Order.all()))
+  def order(conn), do: send_resp(conn, 200, render("pizzas/orders", orders: Order.all()))
+
+  def add_order(conn, params), do: send_resp(conn, 200, render("pizzas/orders", orders: Order.create(params)))
+
 
   # defp redirect(conn, url) do
   #   Plug.Conn.put_resp_header(conn, "location", url) |> send_resp(303, "")

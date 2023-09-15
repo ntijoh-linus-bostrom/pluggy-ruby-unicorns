@@ -29,14 +29,12 @@ defmodule Pluggy.Order do
   #   )
   # end
 
-  # def create(params) do
-  #   name = params["name"]
-  #   tastiness = String.to_integer(params["tastiness"])
+  def create(params) do
+    name = params["name"]
+    ingredients = String.to_integer(params["ingredients"])
 
-  #   Postgrex.query!(DB, "INSERT INTO fruits (name, tastiness) VALUES ($1, $2)", [name, tastiness],
-  #     pool: DBConnection.ConnectionPool
-  #   )
-  # end
+    Postgrex.query!(DB, "INSERT INTO orders (name, ingredients) VALUES ($1, $2)", [name, ingredients], pool: DBConnection.ConnectionPool)
+  end
 
   # def delete(id) do
   #   Postgrex.query!(DB, "DELETE FROM fruits WHERE id = $1", [String.to_integer(id)],
@@ -50,7 +48,7 @@ defmodule Pluggy.Order do
   # end
 
   defp to_struct_list(rows) do
-    for [id, name, ingredients, done, paid_for, picked_up] <- rows, do: %Order{id: id, name: name, ingredients: Ingredient.list_ingredients(ingredients), done: done, paid_for: paid_for, picked_up: picked_up}
+    for [id, name, ingredients, done, paid_for, picked_up] <- rows, do: %Order{id: id, name: name, ingredients: Ingredient.int_to_list(ingredients), done: done, paid_for: paid_for, picked_up: picked_up}
   end
 
 

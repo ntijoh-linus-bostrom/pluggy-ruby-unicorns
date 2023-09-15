@@ -49,7 +49,7 @@ defmodule Pluggy.Pizza do
   # end
 
   defp to_struct_list(rows) do
-    for [id, name, ingredients, image] <- rows, do: %Pizza{id: id, name: name, ingredients: Ingredient.list_ingredients(ingredients), image: image}
+    for [id, name, ingredients, image] <- rows, do: %Pizza{id: id, name: name, ingredients: Ingredient.int_to_list(ingredients), image: image}
   end
 
 

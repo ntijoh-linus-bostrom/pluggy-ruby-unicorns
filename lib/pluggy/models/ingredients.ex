@@ -13,6 +13,16 @@ defmodule Pluggy.Ingredient do
     |> to_struct
   end
 
+  def get_id(name) do
+    Postgrex.query!(DB, "SELECT id FROM ingredients WHERE name = $1 LIMIT 1", [name], pool: DBConnection.ConnectionPool).rows
+  end
+
+  def size() do
+    Postgrex.query!(DB, "SELECT COUNT(id) FROM ingredients;", [], pool: DBConnection.ConnectionPool).rows
+    |> List.flatten()
+    |> hd()
+  end
+
   # def update(id, params) do
   #   name = params["name"]
   #   tastiness = String.to_integer(params["tastiness"])
@@ -49,7 +59,7 @@ defmodule Pluggy.Ingredient do
     for [id, name] <- rows, do: %Ingredient{id: id, name: name}
   end
 
-  def list_ingredients(num) do
+  def int_to_list(num) do
     Integer.digits(num, 2)
     |> Enum.reverse()
     |> Enum.with_index(1)
@@ -59,9 +69,20 @@ defmodule Pluggy.Ingredient do
     |> Enum.reverse()
   end
 
-  def get(num) do
-    Integer.digits(num, 2)
-    Postgrex.query!(DB, "SELECT * FROM ingredients ORDER BY id", [], pool: DBConnection.ConnectionPool).rows
-
+  def list_to_int(name_list) do
+    id_list = Enum.reduce(name_list, [], fn name, output -> [ Ingredient.get_id(name) | output] end)
+    Enum.reduce(Enum.to_list(Range.new(1, Ingredient.size())), [], (fn i, acc -> (if Enum.member?(id_list, i), do: List.replace_at(acc, i - 1, 1), else: List.replace_at(acc, i - 1, 0)) end))
   end
+#Ha en god helg / william
+  # defp to_binary(id_list), do: to_binary(id_list, Enum.to_list(1..Ingredient.size()))
+  # defp to_binary(id_list, acc) do
+  #   cond do
+  #     (hd id_list) == (hd acc) -> [1 | to_binary((tl id_list), (tl acc))]
+  #   end
+  # end
+
+  # def list_to_int(name_list) do
+  #   id_list = Enum.reduce(name_list, [], fn name, output -> [ Ingredient.get_id(name) | output] end)
+  #   Enum.reduce(Enum.to_list(1..17), [], fn i, output -> if Enum.member?(id_list, i), do: [1 | output], else: [0 | output] end)
+  # end
 end
