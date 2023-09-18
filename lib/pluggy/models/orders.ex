@@ -3,6 +3,7 @@ defmodule Pluggy.Order do
 
   alias Pluggy.Order
   alias Pluggy.Ingredient
+  alias Pluggy.Pizza
 
   def all do
     Postgrex.query!(DB, "SELECT * FROM orders", [], pool: DBConnection.ConnectionPool).rows
@@ -31,8 +32,7 @@ defmodule Pluggy.Order do
 
   def create(params) do
     name = params["name"]
-    ingredients = String.to_integer(params["ingredients"])
-
+    ingredients = Pizza.get_ingredients_from_name(name)
     Postgrex.query!(DB, "INSERT INTO orders (name, ingredients) VALUES ($1, $2)", [name, ingredients], pool: DBConnection.ConnectionPool)
   end
 

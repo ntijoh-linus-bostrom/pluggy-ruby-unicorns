@@ -52,10 +52,13 @@ defmodule Pluggy.PizzaController do
 
   def order(conn), do: send_resp(conn, 200, render("pizzas/orders", orders: Order.all()))
 
-  def add_order(conn, params), do: send_resp(conn, 200, render("pizzas/orders", orders: Order.create(params)))
+  def add_order(conn, params) do
+    Order.create(params)
+    redirect(conn, "orders")
+  end
 
 
-  # defp redirect(conn, url) do
-  #   Plug.Conn.put_resp_header(conn, "location", url) |> send_resp(303, "")
-  # end
+  defp redirect(conn, url) do
+    Plug.Conn.put_resp_header(conn, "location", url) |> send_resp(303, "")
+  end
 end

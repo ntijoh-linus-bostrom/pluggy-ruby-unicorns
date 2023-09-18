@@ -9,6 +9,12 @@ defmodule Pluggy.Pizza do
     |> to_struct_list
   end
 
+  def get_ingredients_from_name(name) do
+    Postgrex.query!(DB, "SELECT ingredients FROM pizzas WHERE name = $1 LIMIT 1", [name], pool: DBConnection.ConnectionPool).rows
+    |> List.flatten()
+    |> hd()
+  end
+
   # def get(id) do
   #   Postgrex.query!(DB, "SELECT * FROM fruits WHERE id = $1 LIMIT 1", [String.to_integer(id)],
   #     pool: DBConnection.ConnectionPool

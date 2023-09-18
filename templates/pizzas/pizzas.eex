@@ -1,5 +1,4 @@
 <ul>
-  <form action="add_order" method="post" >
   <%= for pizza <- pizzas do %>
     <li>
       <%= pizza.id %> - <%= pizza.name %>
@@ -11,13 +10,14 @@
         <% end %>
       </ul>
       <img src="/img/<%= pizza.image %>" alt="Image of <%= pizza.name %>" width="200" height="200"> <br>
-      <label for="<%= pizza.id %>" > Add to order: </label>
-      <input type="checkbox" id="<%= pizza.id %>" name="<%= pizza.name %>" order_ingredients="<%= pizza.ingredients %>"
+      <form action="add_order" method="post" >
+        <input type="hidden" name="name" value="<%= pizza.name %>" >
+        <label for="<%= pizza.id %>" > Order: </label>
+        <input type="submit" id="<%= pizza.id %>" name="submit" value="<%= pizza.name %>" >
+      </form>
 	  </li>
+    <br>
   <% end %>
-  <br>
-  <input type="submit" name="submit" value="Add order!" >
-  </form>
 </ul>
 
 

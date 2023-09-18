@@ -21,9 +21,28 @@ defmodule Mix.Tasks.Seed do
   defp create_tables() do
     IO.puts("Creating tables")
     #Postgrex.query!(DB, "Create TABLE fruits (id SERIAL, name VARCHAR(255) NOT NULL, tastiness INTEGER NOT NULL)", [], pool: DBConnection.ConnectionPool)
-    Postgrex.query!(DB, "CREATE TABLE pizzas (id SERIAL, name VARCHAR(255) NOT NULL, ingredients INTEGER NOT NULL, image VARCHAR(255) NOT NULL)", [], pool: DBConnection.ConnectionPool)
-    Postgrex.query!(DB, "CREATE TABLE ingredients (id SERIAL, name VARCHAR(255) NOT NULL)", [], pool: DBConnection.ConnectionPool)
-    Postgrex.query!(DB, "CREATE TABLE orders (id SERIAL, name VARCHAR(255) NOT NULL, ingredients INTEGER NOT NULL, done BOOLEAN NOT NULL, paid_for BOOLEAN NOT NULL, picked_up BOOLEAN NOT NULL)", [], pool: DBConnection.ConnectionPool)
+
+    Postgrex.query!(DB, "CREATE TABLE pizzas (
+      id SERIAL,
+      name VARCHAR(255) NOT NULL,
+      ingredients INTEGER NOT NULL,
+      image VARCHAR(255) NOT NULL
+    )", [], pool: DBConnection.ConnectionPool)
+
+    Postgrex.query!(DB, "CREATE TABLE ingredients (
+      id SERIAL,
+      name VARCHAR(255) NOT NULL
+    )", [], pool: DBConnection.ConnectionPool)
+
+    Postgrex.query!(DB, "CREATE TABLE orders (
+      id SERIAL,
+      name VARCHAR(255) NOT NULL,
+      ingredients INTEGER NOT NULL,
+      done BOOLEAN NOT NULL DEFAULT false,
+      paid_for BOOLEAN NOT NULL DEFAULT false,
+      picked_up BOOLEAN NOT NULL DEFAULT false
+    )", [], pool: DBConnection.ConnectionPool)
+
   end
 
   defp seed_data() do
