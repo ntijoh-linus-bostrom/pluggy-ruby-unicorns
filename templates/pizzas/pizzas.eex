@@ -1,7 +1,9 @@
 <ul>
   <%= for pizza <- pizzas do %>
+
     <li>
       <%= pizza.id %> - <%= pizza.name %>
+
       <ul>
         <%= for ingredient <- pizza.ingredients do %>
           <li>
@@ -9,17 +11,17 @@
           </li>
         <% end %>
       </ul>
+
       <img src="/img/<%= pizza.image %>" alt="Image of <%= pizza.name %>" width="200" height="200"> <br>
+
       <form action="add_order" method="post" >
         <input type="hidden" name="name" value="<%= pizza.name %>" >
         <label for="<%= pizza.id %>" > Order: </label>
         <input type="submit" id="<%= pizza.id %>" name="submit" value="<%= pizza.name %>" >
       </form>
+      
 	  </li>
     <br>
+
   <% end %>
 </ul>
-
-
-
-

@@ -24,34 +24,24 @@ defmodule Pluggy.Router do
   plug(:match)
   plug(:dispatch)
 
-  # get("/fruits", do: FruitController.index(conn))
-  # get("/fruits/new", do: FruitController.new(conn))
-  # get("/fruits/:id", do: FruitController.show(conn, id))
-  # get("/fruits/:id/edit", do: FruitController.edit(conn, id))
 
-  # post("/fruits", do: FruitController.create(conn, conn.body_params))
-
-  # # should be put /fruits/:id, but put/patch/delete are not supported without hidden inputs
-  # post("/fruits/:id/edit", do: FruitController.update(conn, id, conn.body_params))
-
-  # # should be delete /fruits/:id, but put/patch/delete are not supported without hidden inputs
-  # post("/fruits/:id/destroy", do: FruitController.destroy(conn, id))
-
+  #GET routes
   get("/ingredients", do: PizzaController.ingredients(conn))
   get("/pizzas", do: PizzaController.pizzas(conn))
   get("/orders", do: PizzaController.order(conn))
 
-
-
+  #POST routes
   post("add_order", do: PizzaController.add_order(conn, conn.body_params))
+
+  #Error handling
+  match _ do
+    send_resp(conn, 404, "Error: 404. Route not found.")
+  end
+
 
 
   post("/users/login", do: UserController.login(conn, conn.body_params))
   post("/users/logout", do: UserController.logout(conn))
-
-  match _ do
-    send_resp(conn, 404, "Error: 404. Route not found.")
-  end
 
   defp put_secret_key_base(conn, _) do
     put_in(

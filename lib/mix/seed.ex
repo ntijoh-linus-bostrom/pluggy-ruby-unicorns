@@ -11,7 +11,6 @@ defmodule Mix.Tasks.Seed do
 
   defp drop_tables() do
     IO.puts("Dropping tables")
-    Postgrex.query!(DB, "DROP TABLE IF EXISTS fruits", [], pool: DBConnection.ConnectionPool)
     Postgrex.query!(DB, "DROP TABLE IF EXISTS users", [], pool: DBConnection.ConnectionPool)
     Postgrex.query!(DB, "DROP TABLE IF EXISTS pizzas", [], pool: DBConnection.ConnectionPool)
     Postgrex.query!(DB, "DROP TABLE IF EXISTS ingredients", [], pool: DBConnection.ConnectionPool)
@@ -20,8 +19,8 @@ defmodule Mix.Tasks.Seed do
 
   defp create_tables() do
     IO.puts("Creating tables")
-    #Postgrex.query!(DB, "Create TABLE fruits (id SERIAL, name VARCHAR(255) NOT NULL, tastiness INTEGER NOT NULL)", [], pool: DBConnection.ConnectionPool)
 
+    #Table containing standard pizzas
     Postgrex.query!(DB, "CREATE TABLE pizzas (
       id SERIAL,
       name VARCHAR(255) NOT NULL,
@@ -29,11 +28,13 @@ defmodule Mix.Tasks.Seed do
       image VARCHAR(255) NOT NULL
     )", [], pool: DBConnection.ConnectionPool)
 
+    #Table listing and indexing all ingredients
     Postgrex.query!(DB, "CREATE TABLE ingredients (
       id SERIAL,
       name VARCHAR(255) NOT NULL
     )", [], pool: DBConnection.ConnectionPool)
 
+    #Table containing all orders
     Postgrex.query!(DB, "CREATE TABLE orders (
       id SERIAL,
       name VARCHAR(255) NOT NULL,
@@ -47,9 +48,8 @@ defmodule Mix.Tasks.Seed do
 
   defp seed_data() do
     IO.puts("Seeding data")
-    # Postgrex.query!(DB, "INSERT INTO fruits(name, tastiness) VALUES($1, $2)", ["Apple", 5], pool: DBConnection.ConnectionPool)
-    # Postgrex.query!(DB, "INSERT INTO fruits(name, tastiness) VALUES($1, $2)", ["Pear", 4], pool: DBConnection.ConnectionPool)
-    # Postgrex.query!(DB, "INSERT INTO fruits(name, tastiness) VALUES($1, $2)", ["Banana", 7], pool: DBConnection.ConnectionPool)
+
+    #Seeding all ingredients and modifiers such as gluten free
     Postgrex.query!(DB, "INSERT INTO ingredients(name) VALUES($1)", ["Gluten"], pool: DBConnection.ConnectionPool)
     Postgrex.query!(DB, "INSERT INTO ingredients(name) VALUES($1)", ["Family"], pool: DBConnection.ConnectionPool)
     Postgrex.query!(DB, "INSERT INTO ingredients(name) VALUES($1)", ["Tomato"], pool: DBConnection.ConnectionPool)
@@ -67,6 +67,8 @@ defmodule Mix.Tasks.Seed do
     Postgrex.query!(DB, "INSERT INTO ingredients(name) VALUES($1)", ["Mushrooms"], pool: DBConnection.ConnectionPool)
     Postgrex.query!(DB, "INSERT INTO ingredients(name) VALUES($1)", ["Chilli"], pool: DBConnection.ConnectionPool)
     Postgrex.query!(DB, "INSERT INTO ingredients(name) VALUES($1)", ["Basil"], pool: DBConnection.ConnectionPool)
+
+    #Seeding all standard pizzas
     Postgrex.query!(DB, "INSERT INTO pizzas(name, ingredients, image) VALUES($1, $2, $3)", ["Marinara", 4, "marinara.svg"], pool: DBConnection.ConnectionPool)
     Postgrex.query!(DB, "INSERT INTO pizzas(name, ingredients, image) VALUES($1, $2, $3)", ["Quattro formaggi", 124, "quattro-formaggi.svg"], pool: DBConnection.ConnectionPool)
     Postgrex.query!(DB, "INSERT INTO pizzas(name, ingredients, image) VALUES($1, $2, $3)", ["Margherita", 65548, "margherita.svg"], pool: DBConnection.ConnectionPool)
@@ -75,7 +77,9 @@ defmodule Mix.Tasks.Seed do
     Postgrex.query!(DB, "INSERT INTO pizzas(name, ingredients, image) VALUES($1, $2, $3)", ["Quattro stagioni", 25228, "quattro-stagioni.svg"], pool: DBConnection.ConnectionPool)
     Postgrex.query!(DB, "INSERT INTO pizzas(name, ingredients, image) VALUES($1, $2, $3)", ["Diavola", 34060, "diavola.svg"], pool: DBConnection.ConnectionPool)
     Postgrex.query!(DB, "INSERT INTO pizzas(name, ingredients, image) VALUES($1, $2, $3)", ["Ortolana", 7180, "ortolana.svg"], pool: DBConnection.ConnectionPool)
-    Postgrex.query!(DB, "INSERT INTO orders(name, ingredients, done, paid_for, picked_up) VALUES($1, $2, $3, $4, $5)", ["Marinara", 4, false, false, false], pool: DBConnection.ConnectionPool)
+
+
+    #Postgrex.query!(DB, "INSERT INTO orders(name, ingredients, done, paid_for, picked_up) VALUES($1, $2, $3, $4, $5)", ["Marinara", 4, false, false, false], pool: DBConnection.ConnectionPool)
   end
 
 end

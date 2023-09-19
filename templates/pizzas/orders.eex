@@ -1,5 +1,6 @@
 <ul>
   <%= for order <- orders do %>
+
     <li>
         <%= order.id %> - <%= order.name %>
 
@@ -14,18 +15,26 @@
 
         <p> Status: </p>
         <ul>
+
             <li>
-                Done?: <%= order.done %>
+                Done?:
+                <%= order.done %>
             </li>
+
             <li>
-                Paid for?: <%= order.paid_for %>
+                Paid for?:
+                <%= order.paid_for %>
             </li>
+
             <li>
-                Picked up?: <%= order.picked_up %>
+                Picked up?:
+                <%= order.picked_up %>
             </li>
+            
         </ul>
 
     </li>
+
   <% end %>
 </ul>
 
