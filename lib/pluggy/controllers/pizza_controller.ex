@@ -23,6 +23,21 @@ defmodule Pluggy.PizzaController do
     redirect(conn, "pizzas")
   end
 
+  def finish(conn, params) do
+    Order.finish(params)
+    redirect(conn, "orders")
+  end
+
+  def pay_for(conn, params) do
+    Order.pay_for(params)
+    redirect(conn, "orders")
+  end
+
+  def pick_up(conn, params) do
+    Order.pick_up(params)
+    redirect(conn, "orders")
+  end
+
 
   #Help functions
   defp redirect(conn, url) do

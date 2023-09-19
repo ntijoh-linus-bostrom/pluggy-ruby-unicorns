@@ -29,6 +29,27 @@
             </li>            
         </ul>
 
+        <%= if !order.done do %>
+            <form action="finish" method="post" >
+                <input type="hidden" name="order_id" value="<%= order.id %>" >
+                <label for="<%= order.id %>" > Mark as finished: </label>
+                <input type="submit" name="submit" value="<%= order.name %>" >
+            </form>
+        <%= end %>
+        <%= if !order.paid_for do %>
+            <form action="pay_for" method="post" >
+                <input type="hidden" name="order_id" value="<%= order.id %>" >
+                <label for="<%= order.id %>" > Mark as paid for: </label>
+                <input type="submit" name="submit" value="<%= order.name %>" >
+            </form>
+        <%= end %>
+        <%= if !order.picked_up do %>
+            <form action="pick_up" method="post" >
+                <input type="hidden" name="order_id" value="<%= order.id %>" >
+                <label for="<%= order.id %>" > Mark as picked up: </label>
+                <input type="submit" name="submit" value="<%= order.name %>" >
+            </form>
+        <%= end %>
     </li>
     <br>
 

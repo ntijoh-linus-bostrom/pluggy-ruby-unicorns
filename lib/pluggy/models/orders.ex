@@ -18,6 +18,21 @@ defmodule Pluggy.Order do
     Postgrex.query!(DB, "INSERT INTO orders (name, ingredients) VALUES ($1, $2)", [name, ingredients], pool: DBConnection.ConnectionPool)
   end
 
+  def finish(params) do
+    id = params["order_id"]
+    Postgrex.query!(DB, "UPDATE orders SET done = true WHERE id = $1", [String.to_integer(id)], pool: DBConnection.ConnectionPool)
+  end
+
+  def pay_for(params) do
+    id = params["order_id"]
+    Postgrex.query!(DB, "UPDATE orders SET paid_for = true WHERE id = $1", [String.to_integer(id)], pool: DBConnection.ConnectionPool)
+  end
+
+  def pick_up(params) do
+    id = params["order_id"]
+    Postgrex.query!(DB, "UPDATE orders SET picked_up = true WHERE id = $1", [String.to_integer(id)], pool: DBConnection.ConnectionPool)
+  end
+
 
   #Struct handling
   defp to_struct_list(rows) do

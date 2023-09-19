@@ -32,6 +32,9 @@ defmodule Pluggy.Router do
 
   #POST routes
   post("add_order", do: PizzaController.add_order(conn, conn.body_params))
+  post("finish", do: PizzaController.finish(conn, conn.body_params))
+  post("pay_for", do: PizzaController.pay_for(conn, conn.body_params))
+  post("pick_up", do: PizzaController.pick_up(conn, conn.body_params))
 
   #User handling for the future
   post("/users/login", do: UserController.login(conn, conn.body_params))
