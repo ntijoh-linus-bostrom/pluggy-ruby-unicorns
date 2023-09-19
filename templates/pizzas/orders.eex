@@ -15,25 +15,22 @@
 
         <p> Status: </p>
         <ul>
-
             <li>
                 Done?:
                 <%= order.done %>
             </li>
-
             <li>
                 Paid for?:
                 <%= order.paid_for %>
             </li>
-
             <li>
                 Picked up?:
                 <%= order.picked_up %>
-            </li>
-            
+            </li>            
         </ul>
 
     </li>
+    <br>
 
   <% end %>
 </ul>

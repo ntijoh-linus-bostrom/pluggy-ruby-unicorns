@@ -3,6 +3,7 @@ defmodule Pluggy.Order do
 
   alias Pluggy.Order
   alias Pluggy.Ingredient
+  alias Pluggy.Pizza
 
 
   #Main functions

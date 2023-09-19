@@ -33,15 +33,14 @@ defmodule Pluggy.Router do
   #POST routes
   post("add_order", do: PizzaController.add_order(conn, conn.body_params))
 
+  #User handling for the future
+  post("/users/login", do: UserController.login(conn, conn.body_params))
+  post("/users/logout", do: UserController.logout(conn))
+
   #Error handling
   match _ do
     send_resp(conn, 404, "Error: 404. Route not found.")
   end
-
-
-
-  post("/users/login", do: UserController.login(conn, conn.body_params))
-  post("/users/logout", do: UserController.logout(conn))
 
   defp put_secret_key_base(conn, _) do
     put_in(
